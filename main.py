@@ -3,20 +3,24 @@ import requests
 import streamlit as st
 import urllib
 import folium
+from io import StringIO
 
 st.title('国土地理院APIを用いて住所から緯度経度に変換するアプリです')
-st.subheader('foliumライブラリを用い地図に表示します')
+st.header('住所の緯度経度を地図に表示します')
 """国土地理院APIを用いて住所から緯度経度に変換する"""
-st.text('環境')
+st.subheader('開発環境')
+st.text('テキスト')
+st.caption('キャプション')
+
 # 国土地理院API
 GeospatialUrl = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
 
-# データフレーム作成
+# データフレーム作成/ファイルの読み込み
 df = pd.read_csv('./sample_address.csv')
-print(pd)
-st.text('テキスト')
+# upload_file = st.file_uploader('ファイルのアップロード', type=['csv'])
+# df = pd.read_csv(upload_file)
+st.write(df)
 
-st.caption('キャプション')
 
 # 国土地理院APIより住所→緯度経度に変換
 lat_list = []
@@ -24,6 +28,7 @@ lng_list = []
 for index, row in df.iterrows():
     s_quote = urllib.parse.quote(row.住所)
     response = requests.get(GeospatialUrl + s_quote)
+    # print(response.json()[0])
     try:
         lat_list.append(response.json()[0]["geometry"]["coordinates"][1])
         lng_list.append(response.json()[0]["geometry"]["coordinates"][0])
@@ -50,6 +55,12 @@ for i, marker in df_new.iterrows():
     lon = marker.lng
     popup ="<strong>{0}</strong><br>Lat:{1:.3f}<br>Long:{2:.3f}".format(name, lat, lon)
     folium.Marker(location=[lat, lon], popup=popup, icon=folium.Icon(color='lightgreen')).add_to(m)
-
 # HTML出力
-m.save('./mapping' + '.html')
+html_mapping = m.save('./mapping' + '.html')
+st.write('地図に表示しますか？')
+if st.button('開始'):
+    comment = st.empty()
+    comment.write('地図に表示します...')
+st.map(html_mapping)
+
+

@@ -1,16 +1,18 @@
+import comments as comments
 import pandas as pd
 import requests
 import streamlit as st
+import streamlit.components.v1 as compose
 import urllib
 import folium
 from io import StringIO
 
 st.title('国土地理院APIを用いて住所から緯度経度に変換するアプリです')
 st.header('住所の緯度経度を地図に表示します')
-"""国土地理院APIを用いて住所から緯度経度に変換する"""
+
 st.subheader('開発環境')
-st.text('テキスト')
-st.caption('キャプション')
+# st.text('テキスト')
+# st.caption('キャプション')
 
 # 国土地理院API
 GeospatialUrl = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
@@ -19,6 +21,9 @@ GeospatialUrl = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
 df = pd.read_csv('./sample_address.csv')
 # upload_file = st.file_uploader('ファイルのアップロード', type=['csv'])
 # df = pd.read_csv(upload_file)
+# st.caption('キャプション')
+st.text('元のデータ（UAV関係会社住所)')
+"""国土地理院APIを用いて住所から緯度経度に変換する"""
 st.write(df)
 
 
@@ -61,6 +66,6 @@ st.write('地図に表示しますか？')
 if st.button('開始'):
     comment = st.empty()
     comment.write('地図に表示します...')
-st.map(html_mapping)
+    compose.html(html_mapping)
 
 

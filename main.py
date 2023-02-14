@@ -1,4 +1,3 @@
-import comments as comments
 import pandas as pd
 import requests
 import streamlit as st
@@ -61,11 +60,13 @@ for i, marker in df_new.iterrows():
     popup ="<strong>{0}</strong><br>Lat:{1:.3f}<br>Long:{2:.3f}".format(name, lat, lon)
     folium.Marker(location=[lat, lon], popup=popup, icon=folium.Icon(color='lightgreen')).add_to(m)
 # HTML出力
-html_mapping = m.save('./mapping' + '.html')
+m.save('./mapping' + '.html')
+
 st.write('地図に表示しますか？')
 if st.button('開始'):
     comment = st.empty()
     comment.write('地図に表示します...')
-    compose.html(html_mapping)
+    compose.html()
+    # st.components.v1.html(html, width=None, height=None, scrolling=False)
 
 

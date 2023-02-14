@@ -1,4 +1,4 @@
 pandas
 requests
-urllib
+urllib3
 folium

@@ -5,14 +5,17 @@ import urllib
 import folium
 
 st.title('国土地理院APIを用いて住所から緯度経度に変換するアプリです')
+st.subheader('foliumライブラリを用い地図に表示します')
 """国土地理院APIを用いて住所から緯度経度に変換する"""
+st.text('環境')
 # 国土地理院API
 GeospatialUrl = "https://msearch.gsi.go.jp/address-search/AddressSearch?q="
+
 # データフレーム作成
 df = pd.read_csv('./sample_address.csv')
 print(pd)
 st.text('テキスト')
-st.subheader('foliumライブラリを用い地図に表示します')
+
 st.caption('キャプション')
 
 # 国土地理院APIより住所→緯度経度に変換

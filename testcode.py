@@ -1,3 +1,4 @@
+import  os
 import pandas as pd
 import requests
 import streamlit as st
@@ -60,11 +61,54 @@ for i, marker in df_new.iterrows():
     lon = marker.lng
     popup ="<strong>{0}</strong><br>Lat:{1:.3f}<br>Long:{2:.3f}".format(name, lat, lon)
     folium.Marker(location=[lat, lon], popup=popup, icon=folium.Icon(color='lightgreen')).add_to(m)
+
+
 # HTML出力
 m.save('./mapping' + '.html')
+
+#パスの操作
+st.text("パスの操作")
+"""
+https://www.sejuku.net/blog/63651
+"""
+print(os.getcwd())
+path = "C:\\Users\sus44\PycharmProjects\surveybl2xy\mapping.html"
+print(path)
+ospath = os.path.basename(path)
+print(ospath)
+
+
+
+st.text("urllib.requestモジュールによるWebページの取得")
+"""
+https://atmarkit.itmedia.co.jp/ait/articles/1910/15/news018.html
+"""
+# res = requests.get('https://www.example.com/')
+# print(res)
+# response = urllib.request.urlopen('https://www.example.com/')
+# print('url:', response.geturl())
+# print('code:', response.getcode())
+# print('Content-Type:', response.info()['Content-Type'])
+# content = response.read()
+# print(content)
+# response.close()
+#
+# html = content.decode()
+# print(html)
+st.text("HTMLファイルからデータの取得(read)")
+"""
+https://www.teamxeppet.com/python-lxml-1/
+"""
+# import glob
+from lxml import html
+#
+# for file in glob.glob(r"C:\Users\sus44\PycharmProjects\surveybl2xy\mapping.html"):
+#     with open(file, mode='rb') as g:
+#         t = html.fromstring(g.read())
+#         text = t.text_content().strip()
+#         print(text)
 
 st.write('地図に表示しますか？')
 if st.button('開始'):
     'mapping...'
-    # html.parse('mapping.html')
-    # stc.iframe(text, width=None, height=None, scrolling=False)
+    ospath

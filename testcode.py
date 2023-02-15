@@ -6,7 +6,9 @@ import streamlit.components.v1 as stc
 import urllib
 import urllib.request
 import folium
-from io import StringIO
+from streamlit_folium import folium_static
+import streamlit as st
+import pandas as pd
 
 st.title('国土地理院APIを用いて住所から緯度経度に変換するアプリです')
 st.header('住所の緯度経度を地図に表示します')
@@ -72,7 +74,7 @@ st.text("パスの操作")
 https://www.sejuku.net/blog/63651
 """
 print(os.getcwd())
-path = "C:\\Users\sus44\PycharmProjects\surveybl2xy\mapping.html"
+path = "https://github.com/norihisayamada/surveybl2xy/tree/ad994286f83af6f99bf17dfd6ae397f5553a2317\mapping.html"
 print(path)
 ospath = os.path.basename(path)
 print(ospath)
@@ -107,8 +109,10 @@ from lxml import html
 #         t = html.fromstring(g.read())
 #         text = t.text_content().strip()
 #         print(text)
+st.text('streamlit-foliumを使用するために「pip install streamlit-folium」でライブラリをインストールします。100個近くのライブラリがインストールされます。')
+"""https://welovepython.net/streamlit-folium/"""
 
 st.write('地図に表示しますか？')
 if st.button('開始'):
     'mapping...'
-    ospath
+    folium_static(m)

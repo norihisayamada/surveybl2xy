@@ -1,11 +1,10 @@
 import pandas as pd
 import requests
 import streamlit as st
-import streamlit.components.v1 as stc
 import urllib
 import urllib.request
 import folium
-from io import StringIO
+from streamlit_folium import folium_static
 
 st.title('国土地理院APIを用いて住所から緯度経度に変換するアプリです')
 st.header('住所の緯度経度を地図に表示します')
@@ -52,7 +51,7 @@ except Exception as e:
 df_new.to_csv('./result_add2latlng.csv', encoding='UTF-8', index=False)
 
 
-# 観光地をmapに描画する
+# 会社住所をmapに描画する
 m = folium.Map(location=[df_new[0:1].lat, df_new[0:1].lng], tiles='OpenStreetMap', zoom_start=10)
 for i, marker in df_new.iterrows():
     name='Location:'+str(i)
@@ -60,11 +59,11 @@ for i, marker in df_new.iterrows():
     lon = marker.lng
     popup ="<strong>{0}</strong><br>Lat:{1:.3f}<br>Long:{2:.3f}".format(name, lat, lon)
     folium.Marker(location=[lat, lon], popup=popup, icon=folium.Icon(color='lightgreen')).add_to(m)
-# HTML出力
+
+# HTML出力（ブラウザで見る場合はchromeなどでブラウジングすることもできます）
 m.save('./mapping' + '.html')
 
 st.write('地図に表示しますか？')
 if st.button('開始'):
     'mapping...'
-    # html.parse('mapping.html')
-    # stc.iframe(text, width=None, height=None, scrolling=False)
+    folium_static(m)

@@ -1,10 +1,15 @@
+
+import  os
 import pandas as pd
 import requests
 import streamlit as st
+import streamlit.components.v1 as stc
 import urllib
 import urllib.request
 import folium
 from streamlit_folium import folium_static
+import streamlit as st
+import pandas as pd
 
 st.title('国土地理院APIを用いて住所から緯度経度に変換するアプリです')
 st.header('住所の緯度経度を地図に表示します')
@@ -51,7 +56,7 @@ except Exception as e:
 df_new.to_csv('./result_add2latlng.csv', encoding='UTF-8', index=False)
 
 
-# 会社住所をmapに描画する
+# 観光地をmapに描画する
 m = folium.Map(location=[df_new[0:1].lat, df_new[0:1].lng], tiles='OpenStreetMap', zoom_start=10)
 for i, marker in df_new.iterrows():
     name='Location:'+str(i)
@@ -60,12 +65,55 @@ for i, marker in df_new.iterrows():
     popup ="<strong>{0}</strong><br>Lat:{1:.3f}<br>Long:{2:.3f}".format(name, lat, lon)
     folium.Marker(location=[lat, lon], popup=popup, icon=folium.Icon(color='lightgreen')).add_to(m)
 
-# HTML出力（ブラウザで見る場合はchromeなどでブラウジングすることもできます）
+
+# HTML出力
 m.save('./mapping' + '.html')
+
+#パスの操作
+st.text("パスの操作")
+"""
+https://www.sejuku.net/blog/63651
+"""
+print(os.getcwd())
+path = "https://github.com/norihisayamada/surveybl2xy/tree/ad994286f83af6f99bf17dfd6ae397f5553a2317\mapping.html"
+print(path)
+ospath = os.path.basename(path)
+print(ospath)
+
+
+
+st.text("urllib.requestモジュールによるWebページの取得")
+"""
+https://atmarkit.itmedia.co.jp/ait/articles/1910/15/news018.html
+"""
+# res = requests.get('https://www.example.com/')
+# print(res)
+# response = urllib.request.urlopen('https://www.example.com/')
+# print('url:', response.geturl())
+# print('code:', response.getcode())
+# print('Content-Type:', response.info()['Content-Type'])
+# content = response.read()
+# print(content)
+# response.close()
+#
+# html = content.decode()
+# print(html)
+st.text("HTMLファイルからデータの取得(read)")
+"""
+https://www.teamxeppet.com/python-lxml-1/
+"""
+# import glob
+from lxml import html
+#
+# for file in glob.glob(r"C:\Users\sus44\PycharmProjects\surveybl2xy\mapping.html"):
+#     with open(file, mode='rb') as g:
+#         t = html.fromstring(g.read())
+#         text = t.text_content().strip()
+#         print(text)
+st.text('streamlit-foliumを使用するために「pip install streamlit-folium」でライブラリをインストールします。100個近くのライブラリがインストールされます。')
+"""https://welovepython.net/streamlit-folium/"""
 
 st.write('地図に表示しますか？')
 if st.button('開始'):
     'mapping...'
     folium_static(m)
-
-

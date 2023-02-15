@@ -1,10 +1,9 @@
+import folium
 import pandas as pd
 import requests
 import streamlit as st
-import urllib
-import urllib.request
-import folium
 from streamlit_folium import folium_static
+import urllib.request
 
 st.title('国土地理院APIを用いて住所から緯度経度に変換するアプリです')
 st.header('住所の緯度経度を地図に表示します')
